@@ -1,0 +1,25 @@
+image:
+  name: salesforce/salesforcedx:latest-full
+pipelines:
+  default:
+    - step:
+        script:
+          - echo "Commited changes to a branch that does not match the listed branches in bitbucket-pipelines.yml."
+          - echo "You can skip running pipline by adding [skip ci] or [ci skip] (with []) to the git commit message."
+          - sfdx --version
+          - sfdx plugins --core
+  branches:  
+   EDWRD-DEV VAL:
+     - step:
+         script:
+           - sfdx --version
+           - sfdx force:auth:jwt:grant -u makhilareddy@cpqdev.com -f sfdcdep.key -i 3MVG9_4NR96cWRpFyIDmLz7wIo8oTtXNx8.kCiW3mfYItOEp_mZkBY4yU9HfQJtg5w1ILW7Ew7nSQIILT2Clr -r https://login.salesforce.com
+           - sfdx force:mdapi:deploy -c -d src -w 50 -l NoTestRun -u makhilareddy@cpqdev.com
+    EDWRD-DEV DEP:
+     - step:
+         script:
+           - sfdx --version
+           - sfdx force:auth:jwt:grant -u makhilareddy@cpqdev.com -f sfdcdep.key -i 3MVG9_4NR96cWRpFyIDmLz7wIo8oTtXNx8.kCiW3mfYItOEp_mZkBY4yU9HfQJtg5w1ILW7Ew7nSQIILT2Clr -r https://login.salesforce.com
+           - sfdx force:mdapi:deploy -d src -w 50 -l NoTestRun -u makhilareddy@cpqdev.com
+           
+   
